@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: printrequest
+  name: printrequest
+  namespace: printrequest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: printrequest
+  template:
+    metadata:
+      labels:
+        app: printrequest
+    spec:
+      containers:
+      - image: erfan272758/printrequest:v1.0.0
+        name: printrequest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: printrequest
+  namespace: printrequest
+  labels:
+    app: printrequest
+spec:
+  selector:
+    app: printrequest
+  ports:
+  - name: printrequest-http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+
